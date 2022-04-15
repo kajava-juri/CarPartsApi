@@ -16,6 +16,8 @@ namespace VaruosadApi.Models
 
         public bool ValidPriceRange => MaxPrice > MinPrice;
 
+        public bool ValidProperty => CheckFilter.CheckPropertyName(SortBy);
+
         public CarPartParameters()
         {
             OrderBy = "ascending";
@@ -36,6 +38,12 @@ namespace VaruosadApi.Models
                 return desc.Contains(stringToCheck) ? "descending" : "ascending";
             }
             return null;
+        }
+        public static bool CheckPropertyName(string stringToCheck)
+        {
+            CarPartDto carPart = new CarPartDto();
+            var propertyNames = carPart.GetType().GetProperties().Select(p => p.Name.ToLower()).ToList();
+            return propertyNames.Contains(stringToCheck.ToLower());
         }
     }
 }

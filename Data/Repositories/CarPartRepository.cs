@@ -22,6 +22,10 @@ namespace VaruosadApi.Data.Repositories
 
         public async Task<PagedResult<CarPart>> GetCarParts(PaginationQuery paginationQuery, CarPartParameters parameters)
         {
+            if (!parameters.ValidProperty)
+            {
+                return null;
+            }
             var carParts = new PagedResult<CarPart>();
             var queryable = _context.CarParts.AsQueryable();
             var page = paginationQuery.PageNumber;
